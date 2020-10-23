@@ -5,11 +5,11 @@ from scipy.stats import chi2
 from abtesting_test import *
 
 # You can comment out these lines! They are just here to help follow along to the tutorial.
-print(t_dist.cdf(-2, 20)) # should print .02963
-print(t_dist.cdf(2, 20)) # positive t-score (bad), should print .97036 (= 1 - .2963)
+# print(t_dist.cdf(-2, 20)) # should print .02963
+# print(t_dist.cdf(2, 20)) # positive t-score (bad), should print .97036 (= 1 - .2963)
 
-print(chi2.cdf(23.6, 12)) # prints 0.976
-print(1 - chi2.cdf(23.6, 12)) # prints 1 - 0.976 = 0.023 (yay!)
+# print(chi2.cdf(23.6, 12)) # prints 0.976
+# print(1 - chi2.cdf(23.6, 12)) # prints 1 - 0.976 = 0.023 (yay!)
 
 # TODO: Fill in the following functions! Be sure to delete "pass" when you want to use/run a function!
 # NOTE: You should not be using any outside libraries or functions other than the simple operators (+, **, etc)
@@ -34,8 +34,7 @@ def get_avg(nums):
     :param nums: list of numbers
     :return: average of list
     '''
-    #TODO: fill me in!
-    pass
+    return sum(nums) / len(nums)
 
 def get_stdev(nums):
     '''
@@ -43,8 +42,9 @@ def get_stdev(nums):
     :param nums: list of numbers
     :return: standard deviation of list
     '''
-    #TODO: fill me in!
-    pass
+    avg = get_avg(nums)
+    num = sum([(num - avg) ** 2 for num in nums])
+    return (num / len(nums)) ** .5
 
 def get_standard_error(a, b):
     '''
@@ -53,8 +53,7 @@ def get_standard_error(a, b):
     :param b: list of numbers
     :return: standard error of a and b (see studio 6 guide for this equation!)
     '''
-    #TODO: fill me in!
-    pass
+    return ((get_stdev(a) ** 2) / len(a) + (get_stdev(b) ** 2) / len(b)) ** .5
 
 def get_2_sample_df(a, b):
     '''
@@ -64,8 +63,9 @@ def get_2_sample_df(a, b):
     :return: integer representing the degrees of freedom between a and b (see studio 6 guide for this equation!)
     HINT: you can use Math.round() to help you round!
     '''
-    #TODO: fill me in!
-    pass
+    astd = (((get_stdev(a) ** 2) / len(a)) ** 2) / (len(a) - 1)
+    bstd = (((get_stdev(b) ** 2) / len(b)) ** 2) / (len(b) - 1)
+    return round((get_standard_error(a, b) ** 4) / (astd + bstd))
 
 def get_t_score(a, b):
     '''
@@ -74,8 +74,7 @@ def get_t_score(a, b):
     :param b: list of numbers
     :return: number representing the t-score given lists a and b (see studio 6 guide for this equation!)
     '''
-    #TODO: fill me in!
-    pass
+    return (get_avg(a) - get_avg(b)) / get_standard_error(a, b)
 
 def perform_2_sample_t_test(a, b):
     '''
@@ -147,7 +146,6 @@ def data_to_num_list(s):
     '''
   return list(map(float, s.split()))
 
-"""
 # t_test 1:
 a_t1_list = data_to_num_list(a1) 
 b_t1_list = data_to_num_list(b1)
@@ -166,7 +164,6 @@ a_t3_list = data_to_num_list(a3)
 b_t3_list = data_to_num_list(b3)
 print(get_t_score(a_t3_list, b_t3_list)) # this should be -2.88969
 print(perform_2_sample_t_test(a_t3_list, b_t3_list)) # this should be .005091
-"""
 
 """
 # chi2_test 1:
